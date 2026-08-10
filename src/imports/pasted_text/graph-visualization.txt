@@ -1,0 +1,169 @@
+import plotly.graph_objects as go
+import networkx as nx
+import random
+
+
+sekolah_nodes = [n for n, attr in G.nodes(data=True) if attr.get('tipe') == 'Sekolah']
+
+random.seed(42) # 
+sampel_sekolah = random.sample(sekolah_nodes, min(3, len(sekolah_nodes)))
+
+sub_nodes = set(sampel_sekolah)
+
+
+for sekolah in sampel_sekolah:
+    tetangga_sekolah = list(G.neighbors(sekolah))
+    sub_nodes.update(tetangga_sekolah)
+    
+
+    for tetangga in tetangga_sekolah:
+        if G.nodes[tetangga].get('tipe') == 'Siswa':
+            ortu_siswa = list(G.neighbors(tetangga))
+            sub_nodes.update(ortu_siswa)
+
+
+H = G.subgraph(list(sub_nodes))
+
+pos = nx.spring_layout(H, k=0.15, seed=42)
+
+node_x = []
+node_y = []
+node_text = []
+node_color = []
+node_size = []
+
+
+for node in H.nodes():
+    x, y = pos[node]
+    node_x.append(x)
+    node_y.append(y)
+
+    attrs = H.nodes[node]
+    node_type = attrs.get("tipe", "Unknown")
+
+    if node_type == "Sekolah":
+        node_color.append("red")
+        node_size.append(15)
+        node_text.append(
+            "<b>SEKOLAH</b><br>"
+            f"ID: {node}<br>"
+            f"Proporsi S1: {attrs.get('proporsi_pendidik_min_s1', '-')}<br>"
+            f"Proporsi Sertifikasi: {attrs.get('proporsi_pendidik_sertifikasi', '-')}<br>"
+            f"Jumlah Pendidik: {attrs.get('jumlah_pendidik', '-')}<br>"
+            f"Rasio Guru/Murid: {attrs.get('rasio_pendidik_peserta_didik', '-')}<br>"
+            f"Jumlah Peserta Didik: {attrs.get('jumlah_peserta_didik', '-')}<br>"
+            f"Jumlah Ruang Kelas: {attrs.get('jumlah_r_kelas', '-')}<br>"
+            f"Ketersediaan Internet: {attrs.get('ketersediaan_internet', '-')}<br>"
+            f"Ketersediaan Listrik: {attrs.get('ketersediaan_listrik', '-')}<br>"
+            f"Jumlah Komputer: {attrs.get('jumlah_komp_milik', '-')}<br>"
+            f"Jumlah Perpus: {attrs.get('jumlah_perpus', '-')}<br>"
+            f"Jumlah Rombel: {attrs.get('jumlah_rombel', '-')}<br>"
+            f"Rata Siswa/Rombel: {attrs.get('jumlah_siswa_rombel', '-')}<br>"
+            f"Jml Penerima PIP: {attrs.get('jumlah_siswa_penerima_PIP', '-')}<br>"
+            f"Rasio Penerima PIP: {attrs.get('rasio_siswa_penerima_PIP', '-')}<br>"
+            f"Kurikulum: {attrs.get('kurikulum', '-')}"
+        )
+
+    elif node_type == "Wilayah":
+        node_color.append("lightgreen")
+        node_size.append(12)
+        node_text.append(
+            "<b>WILAYAH</b><br>"
+            f"ID: {node}<br>"
+            f"Daerah Khusus: {attrs.get('daerah_khusus', '-')}<br>"
+            f"Wilayah Bagian: {attrs.get('wilayah_bagian', '-')}<br>"
+            f"Jenis Wilayah: {attrs.get('jenis_wilayah', '-')}<br>"
+            f"Status: {attrs.get('status_wilayah', '-')}"
+        )
+
+    elif node_type == "Ortu":
+        node_color.append("orange")
+        node_size.append(10)
+        node_text.append(
+            "<b>PROFIL ORTU</b><br>"
+            f"Node ID: {node}<br>"
+            f"Pendidikan Ayah: {attrs.get('Apa jenjang sekolah tertinggi yang diselesaikan ayahmu?', '-')}<br>"
+            f"Pendidikan Ibu: {attrs.get('Apa jenjang sekolah tertinggi yang diselesaikan ibumu?', '-')}<br>"
+            f"Pekerjaan Ayah: {attrs.get('Apa pekerjaan ayahmu?', '-')}<br>"
+            f"Pekerjaan Ibu: {attrs.get('Apa pekerjaan ibumu?', '-')}"
+        )
+
+    elif node_type == "Siswa":
+        node_color.append("skyblue")
+        node_size.append(7)
+        node_text.append(
+            "<b>SISWA</b><br>"
+            f"ID: {node}<br>"
+            f"Gender: {attrs.get('Apakah kamu perempuan atau laki-laki?', '-')}<br>"
+            f"Family Size: {attrs.get('Ada berapa keluarga yang tinggal bersama di rumahmu?', '-')}<br>"
+            f"Meja Belajar: {attrs.get('Kepemilikan Meja belajar di rumah', '-')}<br>"
+            f"Kamar Sendiri: {attrs.get('Kamar tidur untuk dirimu sendiri (tidak berbagi dengan saudara atau orang lain)', '-')}<br>"
+            f"Tempat Tenang: {attrs.get('Tempat belajar yang tenang di rumah', '-')}<br>"
+            f"Listrik Belajar: {attrs.get('Listrik dan lampu untuk belajar di rumah pada malam hari', '-')}<br>"
+            f"Komputer/Laptop: {attrs.get('Komputer, laptop, atau tablet yang bisa kamu pakai untuk keperluan belajar atau tugas sekolah', '-')}<br>"
+            f"Internet: {attrs.get('Sambungan ke internet di rumah', '-')}<br>"
+            f"Smartphone: {attrs.get('Kepemilikan telepon seluler (handphone) dengan akses internet (misal, smartphone)', '-')}<br>"
+            f"Buku Tugas: {attrs.get('Kepemilikan buku-buku yang bisa membantumu mengerjakan tugas-tugas sekolah', '-')}<br>"
+            f"Kelas Nilai AN: {attrs.get('target_kelas_nilai', '-')}"
+        )
+
+
+edge_x = []
+edge_y = []
+
+for edge in H.edges():
+    x0, y0 = pos[edge[0]]
+    x1, y1 = pos[edge[1]]
+    edge_x.extend([x0, x1, None])
+    edge_y.extend([y0, y1, None])
+
+edge_trace = go.Scatter(
+    x=edge_x, y=edge_y,
+    line=dict(width=0.3, color="#888"),
+    hoverinfo="none",
+    mode="lines"
+)
+
+
+node_trace = go.Scatter(
+    x=node_x,
+    y=node_y,
+    mode="markers",
+    hovertemplate="%{text}<extra></extra>",
+    text=node_text,
+    marker=dict(
+        showscale=False,
+        color=node_color,
+        size=node_size,
+        line=dict(width=1, color="white")
+    )
+)
+
+legend_data = [
+    ("Sekolah", "red"),
+    ("Wilayah", "lightgreen"),
+    ("Profil Ortu", "orange"),
+    ("Siswa", "skyblue")
+]
+
+legend_traces = [
+    go.Scatter(x=[None], y=[None], mode="markers",
+               marker=dict(size=10, color=c), name=l)
+    for l, c in legend_data
+]
+
+fig = go.Figure(
+    data=[edge_trace, node_trace] + legend_traces,
+    layout=go.Layout(
+        title="<b>Visualisasi Interaktif Graph Asesmen Nasional (Sampel Ego Graph)</b>",
+        title_x=0.5,
+        showlegend=True,
+        hovermode="closest",
+        margin=dict(b=20, l=5, r=5, t=40),
+        xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+        yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+        plot_bgcolor="white"
+    )
+)
+
+fig.show()
