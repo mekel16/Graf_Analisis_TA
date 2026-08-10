@@ -1,11 +1,15 @@
 # Prediksi Capaian Nilai Siswa (Rural vs Urban) menggunakan GNN & SHAP
 
+![Visualisasi Proyek](src/imports/export-2026-08-09T18_36_31.653Z.png)
+
 Proyek ini adalah implementasi dari skripsi berjudul **"Analisis Faktor Pengaruh pada Prediksi Capaian Nilai Siswa Daerah Rural-Urban di Indonesia Timur Menggunakan Graph Neural Network-Shapley Additive Explanations"** oleh **Michael Luwi Pallea'** (Sains Data - Universitas Negeri Surabaya, 2026).
 
 ## Deskripsi Singkat
 Proyek ini bertujuan untuk membandingkan dan menganalisis faktor-faktor apa saja yang paling memengaruhi prestasi siswa di daerah pedesaan (*rural*) dan perkotaan (*urban*) di kawasan Indonesia Timur. 
 
 Karena data pendidikan memiliki hubungan yang kompleks (contoh: siswa bersekolah di sekolah yang sama atau diajar oleh guru yang sama), proyek ini mengubah data tabel biasa menjadi bentuk **Graf (Jaringan)**. Algoritma Kecerdasan Buatan (AI) bernama **Graph Neural Network (GNN)** kemudian digunakan untuk memprediksi capaian nilai siswa, dan metode **SHAP** digunakan untuk menjelaskan mengapa model AI tersebut memberikan prediksi sedemikian rupa.
+
+![Grafik dan Analisis](src/imports/image.png)
 
 ## Data yang Digunakan
 Data berasal dari **Asesmen Nasional (AN) 2024**. Terdiri dari 2.162 siswa (1.329 dari rural dan 833 dari urban). Data ini dipetakan menjadi 4 jenis titik (simpul) di dalam jaringan graf:
@@ -19,9 +23,29 @@ Data berasal dari **Asesmen Nasional (AN) 2024**. Terdiri dari 2.162 siswa (1.32
 2. **Pemodelan GNN**: AI mempelajari pola dari jaringan tersebut untuk mengklasifikasikan siswa ke dalam capaian nilai Rendah, Cukup, atau Tinggi.
 3. **Analisis dengan SHAP**: Mengekstrak alasan dari AI untuk mengetahui faktor mana yang paling berdampak positif maupun negatif terhadap nilai siswa.
 
+![Hasil dan Temuan](src/imports/image-1.png)
+
 ## Temuan Penting (Insights)
 - **Kondisi Sekolah Adalah Kunci**: Baik di desa maupun di kota, faktor dari dalam sekolah (terutama *Jumlah Siswa per Rombel* atau kepadatan kelas) adalah penentu paling kuat terhadap capaian siswa.
 - **Kondisi Desa (Rural)**: Hambatan ekonomi keluarga (seperti banyaknya siswa penerima bantuan PIP) adalah faktor pendorong terbesar kedua. Selain itu, latar belakang pendidikan ayah sangat membantu mendongkrak nilai siswa di desa untuk menutupi kekurangan fasilitas sekolah.
 - **Kondisi Kota (Urban)**: Skala sekolah (total jumlah murid) menjadi sangat dominan. Kepadatan kelas di sekolah favorit perkotaan yang kompetitif justru mendorong siswa untuk meraih nilai tertinggi.
 
---
+---
+
+## Cara Menjalankan Proyek Secara Lokal
+
+Pastikan Anda sudah memiliki Node.js terinstal di perangkat Anda.
+
+1. **Instal Dependensi (Keperluan Proyek)**
+   Buka terminal/command prompt di dalam folder proyek ini, lalu ketik:
+   ```bash
+   npm install
+   ```
+
+2. **Jalankan Aplikasi**
+   Setelah proses instalasi selesai, ketik:
+   ```bash
+   npm run dev
+   ```
+
+3. Buka peramban (browser) Anda dan buka tautan yang muncul di terminal (contoh: `http://localhost:5173/` atau `http://localhost:3000/`) untuk melihat hasilnya.
