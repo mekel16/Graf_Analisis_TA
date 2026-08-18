@@ -1,15 +1,14 @@
 # Prediksi Capaian Nilai Siswa (Rural vs Urban) menggunakan GNN & SHAP
 
-![Visualisasi Proyek](src/imports/export-2026-08-09T18_36_31.653Z.png)
+
+# [Link ringkasan Skripsi](https://skripsi-public-michael.michp.workers.dev/)
 
 Proyek ini adalah implementasi dari skripsi berjudul **"Analisis Faktor Pengaruh pada Prediksi Capaian Nilai Siswa Daerah Rural-Urban di Indonesia Timur Menggunakan Graph Neural Network-Shapley Additive Explanations"** oleh **Michael Luwi Pallea'** (Sains Data - Universitas Negeri Surabaya, 2026).
 
 ## Deskripsi Singkat
 Proyek ini bertujuan untuk membandingkan dan menganalisis faktor-faktor apa saja yang paling memengaruhi prestasi siswa di daerah pedesaan (*rural*) dan perkotaan (*urban*) di kawasan Indonesia Timur. 
 
-Karena data pendidikan memiliki hubungan yang kompleks (contoh: siswa bersekolah di sekolah yang sama atau diajar oleh guru yang sama), proyek ini mengubah data tabel biasa menjadi bentuk **Graf (Jaringan)**. Algoritma Kecerdasan Buatan (AI) bernama **Graph Neural Network (GNN)** kemudian digunakan untuk memprediksi capaian nilai siswa, dan metode **SHAP** digunakan untuk menjelaskan mengapa model AI tersebut memberikan prediksi sedemikian rupa.
-
-![Grafik dan Analisis](src/imports/image.png)
+Karena data pendidikan memiliki hubungan yang kompleks (contoh: siswa bersekolah di sekolah yang sama atau diajar oleh sertifikasi pendidikan yang  yang sama), proyek ini mengubah data tabel biasa menjadi bentuk **Graf (Jaringan)**. Algoritma Kecerdasan Buatan (AI) bernama **Graph Neural Network (GNN)** kemudian digunakan untuk memprediksi capaian nilai siswa, dan metode **SHAP** digunakan untuk menjelaskan mengapa model AI tersebut memberikan prediksi sedemikian rupa.
 
 ## Data yang Digunakan
 Data berasal dari **Asesmen Nasional (AN) 2024**. Terdiri dari 2.162 siswa (1.329 dari rural dan 833 dari urban). Data ini dipetakan menjadi 4 jenis titik (simpul) di dalam jaringan graf:
